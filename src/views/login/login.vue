@@ -43,6 +43,7 @@ import { ref } from 'vue'
 import { useStore } from 'vuex'
 import { validPassword } from './rules'
 import { ElMessage } from 'element-plus'
+import { useRouter } from 'vue-router'
 const loginForm = ref({
   username: '',
   password: ''
@@ -51,6 +52,7 @@ const loginForm = ref({
 const loading = ref(false)
 const loginFromRef = ref(null)
 const store = useStore()
+const router = useRouter()
 
 // 验证规则
 const loginRules = ref({
@@ -81,6 +83,7 @@ const handleLogin = () => {
       .dispatch('user/login', loginForm.value)
       .then(() => {
         loading.value = false
+        router.push('/layout') //页面跳转
       })
       .catch((err) => {
         console.log(err)
