@@ -10,7 +10,8 @@ import i18n from '@/i18n'
 // }
 export const validPassword = () => {
     return (rule, value, callback) => {
-        if (validPassword.length < 6) {
+
+        if (value.length < 6) {
             callback(new Error("密码长度不能小于6位数"))
         } else {
             callback()

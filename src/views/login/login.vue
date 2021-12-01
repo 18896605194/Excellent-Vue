@@ -11,26 +11,20 @@
       </div>
 
       <el-form-item prop="username">
-        <span class="svg-container">
-          <el-icon>
-            <avatar />
-          </el-icon>
-        </span>
-        <el-input placeholder="username" name="username" type="text" />
+        <el-input
+          placeholder="账号"
+          name="username"
+          type="text"
+          v-model="loginForm.username"
+        />
       </el-form-item>
 
       <el-form-item prop="password">
-        <span class="svg-container">
-          <el-icon>
-            <avatar />
-          </el-icon>
-        </span>
-        <el-input placeholder="password" name="password" />
-        <span class="show-pwd">
-          <el-icon>
-            <avatar />
-          </el-icon>
-        </span>
+        <el-input
+          placeholder="密码"
+          name="password"
+          v-model="loginForm.password"
+        />
       </el-form-item>
 
       <el-button
@@ -47,7 +41,8 @@
 <script setup>
 import { ref } from 'vue'
 import { useStore } from 'vuex'
-
+import { validPassword } from './rules'
+import { ElMessage } from 'element-plus'
 const loginForm = ref({
   username: '',
   password: ''
@@ -56,6 +51,25 @@ const loginForm = ref({
 const loading = ref(false)
 const loginFromRef = ref(null)
 const store = useStore()
+
+// 验证规则
+const loginRules = ref({
+  username: [
+    {
+      required: true,
+      trigger: 'blur',
+      message: '账号必须填写'
+    }
+  ],
+  password: [
+    {
+      required: true,
+      trigger: 'blur',
+      validator: validPassword()
+    }
+  ]
+})
+
 // 登录按钮
 const handleLogin = () => {
   loginFromRef.value.validate((valid) => {
@@ -64,9 +78,8 @@ const handleLogin = () => {
     }
     loading.value = true
     store
-      .dispatch('login', loginForm.value)
+      .dispatch('user/login', loginForm.value)
       .then(() => {
-        console.log('22222222222222222')
         loading.value = false
       })
       .catch((err) => {

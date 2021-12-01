@@ -5,7 +5,7 @@ import request from '@/utils/request'
  */
 export const login = data => {
     return request({
-        url: '/User/Login',
+        url: 'api/User/Login',
         method: 'POST',
         data
     })
