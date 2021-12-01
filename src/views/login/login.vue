@@ -1,6 +1,11 @@
 <template>
   <div class="login-container">
-    <el-form class="login-form" >
+    <el-form
+      class="login-form"
+      :model="loginForm"
+      ref="loginFromRef"
+      :rules="loginRules"
+    >
       <div class="title-container">
         <h3 class="title">用户登录</h3>
       </div>
@@ -11,11 +16,7 @@
             <avatar />
           </el-icon>
         </span>
-        <el-input
-          placeholder="username"
-          name="username"
-          type="text"
-        />
+        <el-input placeholder="username" name="username" type="text" />
       </el-form-item>
 
       <el-form-item prop="password">
@@ -24,10 +25,7 @@
             <avatar />
           </el-icon>
         </span>
-        <el-input
-          placeholder="password"
-          name="password"
-        />
+        <el-input placeholder="password" name="password" />
         <span class="show-pwd">
           <el-icon>
             <avatar />
@@ -35,18 +33,48 @@
         </span>
       </el-form-item>
 
-      <el-button type="primary" style="width: 100%; margin-bottom: 30px"
+      <el-button
+        type="primary"
+        style="width: 100%; margin-bottom: 30px"
+        :loading="loading"
+        @click="handleLogin"
         >登录</el-button
       >
     </el-form>
   </div>
 </template>
 
-
-
 <script setup>
-import { ref } from "vue"
- 
+import { ref } from 'vue'
+import { useStore } from 'vuex'
+
+const loginForm = ref({
+  username: '',
+  password: ''
+})
+// 动作处理
+const loading = ref(false)
+const loginFromRef = ref(null)
+const store = useStore()
+// 登录按钮
+const handleLogin = () => {
+  loginFromRef.value.validate((valid) => {
+    if (!valid) {
+      return
+    }
+    loading.value = true
+    store
+      .dispatch('login', loginForm.value)
+      .then(() => {
+        console.log('22222222222222222')
+        loading.value = false
+      })
+      .catch((err) => {
+        console.log(err)
+        loading.value = false
+      })
+  })
+}
 </script>
 
 <style lang="scss" scoped>
@@ -93,7 +121,6 @@ $cursor: #fff;
       }
     }
   }
-
 
   .svg-container {
     padding: 6px 5px 6px 15px;
