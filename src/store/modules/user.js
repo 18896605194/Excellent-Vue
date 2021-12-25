@@ -3,6 +3,7 @@ import { setItem, getItem } from '@/utils/storage'
 import { TOKEN } from '@/constant' //避免hardcode
 import { ElMessage } from 'element-plus'
 import { Promise } from 'core-js'
+import router from '@/router'
 export default {
     namespaced: true,
     state: () => ({
@@ -19,6 +20,7 @@ export default {
         }
     },
     actions: {
+        /*  登录操作 */
         login(context, userInfo) {
             return new Promise((resolve, reject) => {
                 login(userInfo).then(ref => {
@@ -33,6 +35,7 @@ export default {
                     })
             })
         },
+        /* 获取一个户信息 */
         getUserInfo(context, userInfo) {
             return new Promise((resolve, reject) => {
                 getUserInfo(userInfo).then(ref => {
@@ -43,6 +46,14 @@ export default {
                     reject(error)
                 })
             })
+        },
+        /*   用户主动退出 */
+        loginOut() {
+            //讲token 和用户信息直接置空
+            this.commit('user/setToken', '')
+            this.commit('user/setUserInfo', {})
+            router.push('/')
+                //TODO:相关权限直接置空
         }
     }
 }
