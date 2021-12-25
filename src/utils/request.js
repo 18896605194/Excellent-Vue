@@ -1,7 +1,7 @@
 // 封装axois
 import axios from 'axios'
 import { Promise } from 'core-js'
-import ElMessage from 'element-plus'
+import { ElMessage } from 'element-plus'
 import store from '@/store'
 
 const service = axios.create({
@@ -21,22 +21,23 @@ service.interceptors.request.use(options => {
     return new Promise(error)
 })
 
-//响应拦截器
+
 // 响应拦截器
 service.interceptors.response.use(
     response => {
-        const { success, message, data } = response.data
+        const data = response.data
             //   要根据success的成功与否决定下面的操作
-        if (success) {
+        if (data.success) {
             return data
         } else {
             // 业务错误
-            ElMessage.error(message) // 提示错误消息
-            return Promise.reject(new Error(message))
+            ElMessage.warning(data.errorMessage) // 提示错误消息
+            return Promise.reject(new Error(data.errorMessage))
         }
     },
     error => {
-        // TODO: 将来处理 token 超时问题
+        console.log(error)
+            // TODO: 将来处理 token 超时问题
         ElMessage.error(error.message) // 提示错误信息
         return Promise.reject(error)
     }

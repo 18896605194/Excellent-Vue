@@ -15,20 +15,17 @@ export default {
             setItem(TOKEN, token)
         },
         setUserInfo(state, userInfo) {
-            state.userInfo = userInfo
+            state.userInfo = JSON.stringify(userInfo)
         }
     },
     actions: {
         login(context, userInfo) {
-            // const { username, password } = userInfo
             return new Promise((resolve, reject) => {
                 login(userInfo).then(ref => {
-                        if (ref.data.success == false) {
-                            ElMessage.error(ref.data.errorMessage)
-                        } else {
-                            ElMessage.success("登陆成功！")
-                        }
-                        this.commit('user/setToken', ref.data.token.accessToken.tokenContent)
+                        ElMessage.success("登陆成功")
+                        console.log(ref.data)
+                        this.commit('user/setToken', ref.token.accessToken.tokenContent)
+                        this.commit('user/setUserInfo', ref.data)
                         resolve()
                     })
                     .catch(err => {
@@ -39,7 +36,8 @@ export default {
         getUserInfo(context, userInfo) {
             return new Promise((resolve, reject) => {
                 getUserInfo(userInfo).then(ref => {
-                    this.commit('user/setUserInfo', ref.data.data)
+
+                    this.commit('user/setUserInfo', ref.data)
                     resolve()
                 }).catch(error => {
                     reject(error)

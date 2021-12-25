@@ -16,8 +16,8 @@ export const login = data => {
  */
 export const getUserInfo = data => {
     return request({
-        url: 'api/User',
-        method: 'post',
+        url: 'api/User/UserInfo',
+        method: 'POST',
         data
     })
 }

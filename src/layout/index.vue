@@ -5,6 +5,7 @@
       class="sidebar-container"
       :style="{ backgroundColor: variables.menuBg }"
     />
+
     <div class="main-container">
       <div class="fixed-header">
         <!-- 顶部的 navbar -->
