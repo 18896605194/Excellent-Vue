@@ -114,7 +114,7 @@ const publicRoutes = [{
         path: '/layout',
         // 注意：带有路径“/”的记录中的组件“默认”是一个不返回 Promise 的函数
         component: layout,
-        /*  redirect: '/layout', */
+        /*   redirect: '/layout', */
         children: [{
                 path: '/profile',
                 name: 'profile',
@@ -147,6 +147,24 @@ const router = createRouter({
     routes: [...publicRoutes, ...privateRoutes]
 })
 
+/**
+ * 初始化路由表
+ */
+/* export function resetRouter() {
+    if (
+        store.getters.userInfo &&
+        store.getters.userInfo.permission &&
+        store.getters.userInfo.permission.menus
+    ) {
+        const menus = store.getters.userInfo.permission.menus
+        menus.forEach(menu => {
+            router.removeRoute(menu)
+        })
+    }
+} */
+
+
+
 
 router.beforeEach((to, from, next) => {
     console.log(store.getters)
@@ -172,4 +190,7 @@ router.beforeEach((to, from, next) => {
         next()
     }
 })
+
+
+
 export default router

@@ -45,8 +45,8 @@ import { validPassword } from './rules'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
 const loginForm = ref({
-  username: '',
-  password: ''
+  username: 'admin',
+  password: '123456'
 })
 // 动作处理
 const loading = ref(false)

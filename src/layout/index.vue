@@ -10,6 +10,7 @@
       <div class="fixed-header">
         <!-- 顶部的 navbar -->
         <navbar />
+        <tags-view></tags-view>
       </div>
       <!-- 内容区 -->
       <app-main />
@@ -21,6 +22,7 @@ import variables from '@/styles/variables.scss'
 import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
 import AppMain from './components/AppMain'
+import TagsView from '@/components/TagsView'
 </script>
 <style lang="scss" scoped>
 @import '~@/styles/mixin.scss';

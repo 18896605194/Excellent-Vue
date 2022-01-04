@@ -17,7 +17,7 @@
   </el-menu-item>
 </template>
 <script setup>
-import MenuItem from './MenuItem.vue'
+import MenuItem from '../MenuItem.vue'
 import { defineProps } from 'vue'
 // 定义 props
 defineProps({
@@ -26,6 +26,4 @@ defineProps({
     required: true
   }
 })
-console.log('11111')
-console.log(route)
 </script>
